@@ -14,12 +14,15 @@ jobs:
     permissions:
       contents: write
 
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      is_new: ${{ steps.tag_check.outputs.exists == 'false' }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT }}
 
       - name: Extract version from tauri.conf.json
         id: version
@@ -46,3 +49,12 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag ${{ steps.version.outputs.version }}
           git push origin ${{ steps.version.outputs.version }}
+
+  release:
+    needs: tag
+    if: needs.tag.outputs.is_new == 'true'
+    uses: ./.github/workflows/release.yml
+    with:
+      version: ${{ needs.tag.outputs.version }}
+    permissions:
+      contents: write

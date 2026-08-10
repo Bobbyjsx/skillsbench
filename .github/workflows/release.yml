@@ -4,6 +4,11 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
 
 jobs:
   release:
@@ -48,8 +53,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.ref_name }}
-          releaseName: 'Skillbench ${{ github.ref_name }}'
+          tagName: ${{ inputs.version || github.ref_name }}
+          releaseName: 'Skillbench ${{ inputs.version || github.ref_name }}'
           releaseBody: 'See the assets below to download and install this version.'
           releaseDraft: false
           prerelease: false
