@@ -2,8 +2,8 @@ name: Build and Release
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 jobs:
   release:
@@ -48,8 +48,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: v__VERSION__
-          releaseName: 'Skillbench v__VERSION__'
+          tagName: ${{ github.ref_name }}
+          releaseName: 'Skillbench ${{ github.ref_name }}'
           releaseBody: 'See the assets below to download and install this version.'
-          releaseDraft: true
+          releaseDraft: false
           prerelease: false
+
