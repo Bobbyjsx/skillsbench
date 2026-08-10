@@ -5,7 +5,7 @@ import { useGroups } from "../../stores/groups";
 import { api } from "../../api/client";
 import type { SkillSummary } from "../../types/api";
 import { EmptyState } from "../ui/EmptyState";
-import { Button, IconButton } from "../ui/Button";
+import { Button } from "../ui/Button";
 import { Input } from "../ui/Input";
 import { SkillGlyph } from "../skills/SkillGlyph";
 import { cn } from "../../lib/cn";
@@ -178,7 +178,7 @@ export function GroupsPage() {
             </div>
           ) : (
             <Button
-              variant="outline"
+              variant="subtle"
               className="w-full gap-2 justify-center border-dashed"
               onClick={() => setIsCreatingGroup(true)}
             >

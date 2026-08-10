@@ -136,7 +136,8 @@ function SidebarInner() {
 }
 
 export function Sidebar() {
-  const { sidebarCollapsed, toggleSidebar } = useApp();
+  const app = useApp();
+  const { sidebarCollapsed, toggleSidebar } = app;
 
   return (
     <>
